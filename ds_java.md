@@ -6,9 +6,13 @@ date: 2023-05-05
 ref: ucb_CS61B
 - - -
 
+**Coverage:**  
+
+[1. Intruduction to Java](#1)  
+[2. Lists](#2)   
 
 
-## 1. Intruduction to Java
+## 1. <span id='1'>Intruduction to Java</span>
 
 ### 1.1 Essentials  
 
@@ -35,7 +39,7 @@ The most common way is to run it through a sequence:
 Example:
 ```shell
 $ javac HelloWorld.java
-$ java HelloWOrld
+$ java HelloWorld
 ```
 
 
@@ -164,7 +168,7 @@ public class DogLauncher {
     }
 }
 ```
-Some key obobservations and terminology:
+Some key observations and terminology:
 * An `object` in Java is an instance of any class.
 * Variables and methods of a class are **members** of a class.
 * The `Dog` class has its own variables, known as **instance variables**, or **non-static variables**.
@@ -172,6 +176,7 @@ Some key obobservations and terminology:
 * To call the `makeNoise` method, we have to first **instantaite** a `Dog` using keyword `new`, and then call `d.makeNoise` instead of `Dog.makeNoise`.  
 
 **Constructors in Java**  
+
 For example:  
 ```java
 public class Dog {
@@ -266,6 +271,7 @@ public class Dog {
     ...
 }
 ```
+
 #### 1.2.3 public static void main (String[] args)  
 Demystification of the declaration used for the main method:  
 * `public`: Most of our methods start with this keyword.
@@ -292,5 +298,10 @@ $ java ArgsDemo these are command line arguments
 ```
 
 #### 1.2.4 Using Libraries  
+Knowing how to find and use existing libraries is often possible to save yourself tons of work and debugging by turning to the web for help.  
 
-Knowing how to find and use existing libraries is often possible to save yourself tons of work and debugging by turning to the web for help.
+
+
+## 2. <span id='2'>Lists</span>
+
+### 2.1 Mystery of the Walrus  

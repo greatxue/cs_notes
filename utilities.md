@@ -4,6 +4,7 @@ author: Kevin Shuey
 title: Notes for Utilities  
 date: 2023-05-02
 - - -
+
 **Coverage:**  
 
 [1. Markdown](#1)   
@@ -548,7 +549,7 @@ LaTex allows writing document in plain text with commands that describe its stru
 *  Use commands to describe ‘what it is’, not ‘how it looks’
 *  Focus on the content, and let LaTeX do its job. 
 
-### 5.2 PART I &ensp;The Basics
+### 5.2 PART I
 
 #### 5.2.1 Basic Structure
 For a minimal LaTeX document,
@@ -620,7 +621,7 @@ x = \frac{-b \pm \sqrt{b^2 - 4ac}}
 where $a$, $b$ and $c$ are \ldots
 ```
 
-### 5.2.4 Interlude  
+#### 5.2.4 Interlude  
 **Environments**  
 A command can produce different output in different contexts: 
 * Note `Σ` could be bigger in the equation environment, and subscripts and superscripts would change position, even though the same commands is used.
@@ -664,7 +665,17 @@ For example:
 \end{document}
 ```
 
-### 5.2.5 Examples with `amsmath`
+**Definition**
+* Define specific command for a complicated equation:  
+  ```latex
+  \newcommand{\rperf}{% 
+    \rho_{\text{perf}}}
+  $$
+  \rperf = {\bf c}'{\bf X} + \varepsilon
+  $$
+  ```
+
+#### 5.2.5 Examples with `amsmath`
 Example 1:
 * Use `equation*` (“equation-star”) for unnumbered equations.
   ```latex
@@ -768,7 +779,8 @@ e^{i\pi} + 1 = 0
 By \eqref{eq:euler}, we have \ldots
 \end{document}
 ```
-### 5.3.2 Figures and Tables
+
+#### 5.3.2 Figures and Tables
 
 **Graphics**  
 * Requires the graphicx package, which provides the `\includegraphics` command.
@@ -829,7 +841,8 @@ For example:
   \end{tabular}
 
 *  Use an ampersand `&` to separate columns and a double backslash `\\` to start a new row.
-### 5.3.3 Bibliographies
+
+#### 5.3.3 Bibliographies
 * Put your references in a `.bib` file in ‘bibtex’ database format.  
 * Each entry in the `.bib` file has a **key** that you can use to reference it in the document.
 * Use the natbib package2 with `\citet` and `\citep`. 
@@ -848,11 +861,24 @@ all odd numbers are prime
 \bibliographystyle{plainnat} % try changing to abbrvnat
 \end{document}
 ```
-### 5.4 PART III
+
+#### 5.3.4 More details
+**Packages**  
+* beamer: for presentations  
+* todonotes: comments and to-do management  
+* tikz: make amazing graphics  
+* pgfplots: create graphs in LaTeX
+* listings: source code printer for LaTeX
+* spreadtab: create spreadsheets in LaTeX   
+...
+
+**Application**  
+* LaTeX can be applied not only on papers, but on presentations and more.  
 
 
-
-### 5.5 Reference
-1. [**Overleaf:** Intro to LaTeX 1](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-1)
-2. [**Overleaf:** Intro to LaTeX 2](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-2)
-3. [**Overleaf:** Intro to LaTeX 3](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-3)
+### 5.4 Reference
+1. [**Overleaf:** Intro to LaTeX 1](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-1)  
+2. [**Overleaf:** Intro to LaTeX 2](https://www.overleaf.com/latex/learnfree-online-introduction-to-latex-part-2)  
+3. [**Overleaf:** Intro to LaTeX 3](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-3)  
+4. [**Overleaf:** Examples](https://www.overleaf.com/latex/examples)  
+5. [**texamples**](http://texample.net)
