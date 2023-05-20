@@ -768,10 +768,86 @@ e^{i\pi} + 1 = 0
 By \eqref{eq:euler}, we have \ldots
 \end{document}
 ```
+### 5.3.2 Figures and Tables
 
-### 5.3.2 Bibliographies
+**Graphics**  
+* Requires the graphicx package, which provides the `\includegraphics` command.
+* Supported graphics formats include JPEG, PNG and PDF (usually).
 
+For example:
+```latex
+\includegraphics[
+  width=0.5\textwidth]{gerbil}   % makes the image take up 50% of the width of the surrounding text
 
+\includegraphics[
+  width=0.3\textwidth,
+  angle=270]{gerbil}
+```
+
+**Optional arguments**
+* Use square brackets `[ ]` for optional arguments, instead of braces`{ }`.
+  ```latex
+  \documentclass[12pt,twocolumn]{article}
+  ```
+
+**Floats**
+* Figures could be arranged properly, with a caption given by `\ref`
+  ```latex
+  \documentclass{article}
+  \usepackage{graphicx}
+  \begin{document}
+
+  Figure \ref{fig:gerbil} shows \ldots
+
+  \begin{figure} 
+  \centering 
+  \includegraphics[%
+     width=0.5\textwidth]{gerbil}
+  \caption{\label{fig:gerbil}Aww\ldots.}
+  \end{figure}
+  \end{document}
+  ```
+
+**Tables**
+* Use the `tabular` environment from the `tabularx` package.
+* The argument specifies column alignment -- left, right, right.
+  ```latex
+  \begin{tabular}{lrr}
+  Item   & Qty & Unit \$ \\
+  Widget & 1  & 199.99  \\
+  Gadget & 2  & 399.99  \\
+  Cable  & 3  & 19.99   \\
+  \end{tabular}
+
+* To specify column alignment, use `\hlinde` for horizonal lines.
+  ```latex
+  \begin{tabular}{|l|r|r|} \hline
+  Item   & Qty & Unit \$ \\\hline
+  Widget & 1  & 199.99  \\
+  Gadget & 2  & 399.99  \\
+  Cable  & 3  & 19.99   \\\hline
+  \end{tabular}
+
+*  Use an ampersand `&` to separate columns and a double backslash `\\` to start a new row.
+### 5.3.3 Bibliographies
+* Put your references in a `.bib` file in ‘bibtex’ database format.  
+* Each entry in the `.bib` file has a **key** that you can use to reference it in the document.
+* Use the natbib package2 with `\citet` and `\citep`. 
+* Reference `\bibliography` at the end, and specify a
+`\bibliographystyle`.
+```latex
+\documentclass{article}
+\usepackage{natbib}
+\begin{document}
+\citet{Brooks1997Methodology}
+show that \ldots. Clearly,
+all odd numbers are prime
+\citep{Jacobson1999Towards}.
+\bibliography{bib-example}
+% if `bib-example' is the name of % your bib file
+\bibliographystyle{plainnat} % try changing to abbrvnat
+\end{document}
+```
 ### 5.4 PART III
 
 
