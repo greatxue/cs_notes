@@ -533,17 +533,250 @@ Pressing ":" (colon) in command mode enters last line mode.
   ```
 * 
   
-  
-  
 
-  ### 4.3 Reference
-  1. [**Zhihu:** Proficient in Vim](https://zhuanlan.zhihu.com/p/68111471?utm_id=0)
-  2. [**RUNOOB:** Linux vi/vim](https://www.runoob.com/linux/linux-vim.html)
-
-
-
+### 4.3 Reference
+1. [**Zhihu:** Proficient in Vim](https://zhuanlan.zhihu.com/p/68111471?utm_id=0)
+2. [**RUNOOB:** Linux vi/vim](https://www.runoob.com/linux/linux-vim.html)
 
 
 
 ## <span id='5'>5. LaTeX</span>  
 
+### 5.1 Introduction
+LaTex allows writing document in plain text with commands that describe its structure and meaning:      
+* The latex program processes your text and commands to produce a beautifully formatted document. 
+*  Use commands to describe ‘what it is’, not ‘how it looks’
+*  Focus on the content, and let LaTeX do its job. 
+
+### 5.2 PART I &ensp;The Basics
+
+#### 5.2.1 Basic Structure
+For a minimal LaTeX document,
+```latex
+\documentclass{article}
+\begin{document}
+Hello World! % contents 
+\end{document}
+```
+* Commands start with a backslash `\`.
+* Every document starts with a `\documentclass` command.
+* The argument in curly braces `{ }` tells the kind of document.
+* `%` starts a comment, which will be ignored.
+
+#### 5.2.2 Typesetting Text
+**Normal**
+* Type text between `\begin{document}` and `\end{document}`.
+* Space in the source file is collapsed in the output.  
+
+**Caveats**
+* Quotation: use a backtick on the left and an apostrophe on the right.
+  ```latex
+  `text'   % Single quotes
+  ``text''  % Double quotes
+  ```
+* Escape special characters like `\$`, `\%`, `\&`, `\#`.
+
+#### 5.2.3 Typesetting Mathematicis 
+
+**Dollar Signs**  
+* `$` is used to mark mathematics in text.
+* Always use `$` in pairs.
+* LaTex handles spacing automatically; it ignores intentional spaces.    
+
+For example:  
+```latex
+Let $a$ and $b$ be distinct positive integers, and let $c = a - b + 1$.
+  ```
+Let $a$ and $b$ be distinct positive integers, and let $c = a - b + 1$.
+
+**Notation**
+* Use caret `^` for superscripts and underscore `_` for subscripts.
+* Use curly braces `{ }` to group superscripts and subscripts.
+* There are commands for Greek letters and common notation.
+
+For example:
+```latex
+$y = c_2 x^2 + c_1 x + c_0$
+$F_n = F_{n-1} + F_{n-2}$ 
+$\mu = A e^{Q/RT}$
+$\Omega = \sum_{k=1}^{n} \omega_k$
+```
+$y = c_2 x^2 + c_1 x + c_0$   
+$F_n = F_{n-1} + F_{n-2}$   
+$\mu = A e^{Q/RT}$  
+$\Omega = \sum_{k=1}^{n} \omega_k$  
+
+**Displayed Equations**
+* For big and scary equations, display it on its own line using `\begin{equation}` and `\end{equation}`.
+* Never leave blank lines in equations.  
+
+For example:  
+```latex
+The roots of a quadratic equation are given by
+\begin{equation}
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}
+         {2a}
+\end{equation}
+where $a$, $b$ and $c$ are \ldots
+```
+
+### 5.2.4 Interlude  
+**Environments**  
+A command can produce different output in different contexts: 
+* Note `Σ` could be bigger in the equation environment, and subscripts and superscripts would change position, even though the same commands is used.
+* In fact, we could have written `$...$` as `\begin{math}...\end{math}`. 
+ 
+For example:  
+```latex
+We can write
+$ \Omega = \sum_{k=1}^{n} \omega_k $   % smaller
+in text, or we can write
+\begin{equation}       
+  \Omega = \sum_{k=1}^{n} \omega_k   % bigger
+\end{equation}
+to display it.
+```
+
+**Lists**
+* The `\begin` and `\end` commands are used to create many different environments.
+```latex
+\begin{itemize}    % for bullet points 
+\item Biscuits
+\item Tea
+\end{itemize}
+
+\begin{enumerate}    % for numbers
+\item Biscuits
+\item Tea
+\end{enumerate}
+```
+
+**Packages**
+* Packages are libraries of extra commands and environments.
+* Each of the packages could be loaded with `\usepackage` command in the preamble.
+
+For example:
+```latex
+\documentclass{article}
+\usepackage{amsmath}    % preamble 
+\begin{document}
+   % Start commands from amsmath here... 
+\end{document}
+```
+
+### 5.2.5 Examples with `amsmath`
+Example 1:
+* Use `equation*` (“equation-star”) for unnumbered equations.
+  ```latex
+  \begin{equation*}
+    \Omega = \sum_{k=1}^{n} \omega_k
+  \end{equation*}
+  ```
+
+Example 2:
+* LaTeX reats adjacent letters as variables multiplied together, while `amsmath` defines commands for many common mathematical operators.
+  ```latex
+  \begin{equation*} 
+  \min_{x,y}{(1-x)^2 + 100(y-x^2)^2} 
+  \end{equation*}
+  ```
+* Use `\operatorname` for others.
+  ```latex
+  \begin{equation*}
+  \beta_i =
+  \frac{\operatorname{Cov}(R_i, R_m)}
+     {\operatorname{Var}(R_m)}
+  \end{equation*}
+  ```
+
+Example 3:
+* Align a sequence of equations at `=` sign with `align*`.
+* An ampersand `&` separates the left column (before the `=`) from the right column (after the `=`).  
+* A double backslash `\\` starts a new line.    
+  ```latex
+  \begin{align*}
+  (x+1)^3 &= (x+1)(x+1)(x+1) \\
+        &= (x+1)(x^2 + 2x + 1) \\
+        &= x^3 + 3x^2 + 3x + 1
+  \end{align*}
+  ```
+
+### 5.3 PART II
+
+#### 5.3.1 Structured Documents
+
+**Title and Abstract**
+* Tell LaTeX the `\title` and `\author` names in the preamble.  
+* Then use `\maketitle` in the document to actually create the title.
+* Use the abstract environment to make an abstract.
+
+For example:  
+```latex 
+\documentclass{article}
+\title{The Title}
+\author{A. Author}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+   % Abstract goes here...
+\end{abstract}
+\end{document}
+```
+
+**Sections**
+* Just use `\section` and `\subsection`.  
+  
+For example:
+```latex
+\documentclass{article}
+\begin{document}
+\section{Introduction}
+  The problem of \ldots
+\section{Method}
+  We investigate \ldots
+\subsection{Sample Preparation}
+\subsection{Data Collection}
+\section{Results}
+\section{Conclusion}
+\end{document}
+```
+
+**Labels and Cross-References**
+* Use `\label` and `\ref` for automatic numbering.  
+* The `amsmath` package provides `\eqref` for referencing equations.
+
+For example：
+```latex
+\documentclass{article} 
+\usepackage{amsmath} % for \eqref 
+\begin{document}
+
+\section{Introduction}
+\label{sec:intro}
+
+In Section \ref{sec:method}, we \ldots
+
+\section{Method}
+\label{sec:method}
+
+\begin{equation}
+\label{eq:euler}
+e^{i\pi} + 1 = 0
+\end{equation}
+
+By \eqref{eq:euler}, we have \ldots
+\end{document}
+```
+
+### 5.3.2 Bibliographies
+
+
+### 5.4 PART III
+
+
+
+### 5.5 Reference
+1. [**Overleaf:** Intro to LaTeX 1](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-1)
+2. [**Overleaf:** Intro to LaTeX 2](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-2)
+3. [**Overleaf:** Intro to LaTeX 3](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-3)

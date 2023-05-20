@@ -114,9 +114,10 @@ Comments are always needed to describe your codes.
 
 ### Defining and Using Classes
 
-#### 1.2.1 Static and NOn-Static Methods
+#### 1.2.1 Static and Non-Static Methods
 
 **Static Methods**  
+
 All code in Java must be part of a class. Here's an example:  
 ```java
 public class Dog {
@@ -125,6 +126,7 @@ public class Dog {
     }
 }
 ```
+
 To run the class, either will do:  
 * to add a `main` method inside `Dog` class
 * to create a "**client**" class `DogLauncher` that runs methods from the `Dog` class.
@@ -135,3 +137,160 @@ To run the class, either will do:
     }
   }
   ```
+
+**Instance Variables and Object Instantiation**
+
+Here is an example of instantiation:
+```java
+public class Dog {
+    public int weightInPounds;
+
+    public void makeNoise(){
+        if (weightInPounds < 10) {
+            System.out.println("yipyipyip!");
+        } else if(weightInPounds < 30) {
+            System.out.println("bark, bark");
+        } else{
+            System.out.println("woof!");
+        }
+    }
+}
+public class DogLauncher {
+    public static void main(String[] args) {
+        Dog d;
+        d = new Dog();
+        d.weightInPounds = 20;
+        d.makeNoise()    
+    }
+}
+```
+Some key obobservations and terminology:
+* An `object` in Java is an instance of any class.
+* Variables and methods of a class are **members** of a class.
+* The `Dog` class has its own variables, known as **instance variables**, or **non-static variables**.
+* The nethod inside `Dog` class has no `static` keyword, which is called **instance methods**.
+* To call the `makeNoise` method, we have to first **instantaite** a `Dog` using keyword `new`, and then call `d.makeNoise` instead of `Dog.makeNoise`.  
+
+**Constructors in Java**  
+For example:  
+```java
+public class Dog {
+    public int weightInPounds;    // Instance variable (as many as you want)
+
+    public Dog(int w) {           // Constructor (how to instantiate the class)
+        weightInPounds = w;         
+    }
+
+    public void makeNoise() {     // Non-static method (invoked by an instance of the class)
+        if (weightInPounds < 10) {
+            System.out.println("yipyipyip!");
+        } else if (weightInPounds < 30) {
+            System.out.println("bark. bark.");
+        } else {
+            System.out.println("woof!");
+        }    
+    }
+}
+```
+A constructor could be used to construct objects in Java.  
+* The constructor will be invoked anytime that we try to create a `Dog` using the new keyword and a single integer parameter. 
+* The constructor is very similar to the `__init__` method in Python.  
+
+For example:
+```java
+public class DogLauncher {
+    public static void main(String[] args) {
+        Dog d = new Dog(20);        //Declaration, instatiation and assignment
+        d.makeNoise();
+    }
+}
+```
+
+**Array Instantiation, Arrays of Objects**  
+* Create an array that can hold two `Dog` objects.
+* Create each actual `Dog` for arrays of instantiated objects in Java
+
+For example:  
+```java
+public class DogArrayDemo {
+    public static void main(String[] args) {
+        /* Create an array of two dogs. */
+        Dog[] dogs = new Dog[2];
+        dogs[0] = new Dog(8);
+        dogs[1] = new Dog(20);
+
+        dogs[0].makeNoise();
+    }
+}
+```
+
+#### 1.2.2 Class Methods and Instance Methods
+Java allows two types of methods:
+* **Class methods**, aka static methods: invoked using the class name  
+  ```java
+  public static Dog maxDog(Dog d1, Dog d2) {
+      if (d1.weightInPounds > d2.weightInPounds) {
+          return d1;
+      }
+      return d2;
+   }
+    
+    Dog d = new Dog(15);
+    Dog d2 = new Dog(100);
+    Dog.maxDog(d, d2);
+  ```
+* **Instance methods**, aka non-static methods: invoked using a specific instance variable  
+  ```java
+  public Dog maxDog(Dog d2) {
+      if (this.weightInPounds > d2.weightInPounds) {
+          return this;
+      }
+      return d2;
+   }
+
+  Dog d = new Dog(15);
+  Dog d2 = new Dog(100);
+  d.maxDog(d2);
+  ```   
+
+**Static Variables**  
+It is occasionally useful for classes to have static variables.   
+* Static variables should be accessed using the name of the class, e.g. `Dog.binomen`.
+* While Java technically allows you to access a static variable using an instance name, it is bad style.  
+
+For example: 
+```java
+public class Dog {
+    public int weightInPounds;
+    public static String binomen = "Canis familiaris";
+    ...
+}
+```
+#### 1.2.3 public static void main (String[] args)  
+Demystification of the declaration used for the main method:  
+* `public`: Most of our methods start with this keyword.
+* `static`: It is a static method, not associated with any particular instance.
+* `void`: It has no return type.
+* `main`: Specific name of the method.
+* `String[] args`: A particular parameter that is passed to the main method.
+
+**Command Line Arguments**  
+Since `main` is called by the Java interpreter itself rather than another Java class, it is the interpreter's job to supply these arguments. They refer usually to the command line arguments. 
+
+For example:
+```java
+public class ArgsDemo {
+    public static void main(String[] args) {
+        System.out.println(args[0]);
+    }
+}
+```
+This program prints out the 0th command line argument:  
+```shell
+$ java ArgsDemo these are command line arguments
+>>these
+```
+
+#### 1.2.4 Using Libraries  
+
+Knowing how to find and use existing libraries is often possible to save yourself tons of work and debugging by turning to the web for help.
