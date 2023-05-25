@@ -304,4 +304,231 @@ Knowing how to find and use existing libraries is often possible to save yoursel
 
 ## 2. <span id='2'>Lists</span>
 
-### 2.1 Mystery of the Walrus  
+### 2.1 Introduction
+
+#### 2.1.1 Mystery of the Walrus  
+
+Case 1:
+```java
+Walrus a = new Walrus(1000, 8.3);
+Walrus b;
+b = a;
+b.weight = 5;
+System.out.println(a);      // 5, 8.30
+System.out.println(b);      // 5, 8.30
+```
+Case 2:
+```java
+int x = 5;
+int y;
+y = x;
+x = 2;
+System.out.println("x is: " + x);   // 2
+System.out.println("y is: " + y);   // 5
+```
+
+**Bits**  
+* All information in the computer is stored in **memory** as a sequence of binary digits.
+* When declaring a variable of a certain type, it sets aside enough bits for the variable, and creates an internal table mapping each variable name to a location.
+  
+**The Golden Rule of Equals (GRoE)**
+* When writing `y = x`, Java interpreter is told to copy the bits from x into y. 
+* This simple idea of copying the bits is true for ANY assignment using `=` in Java.   
+
+#### 2.1.2 Reference Types  
+
+In Java, there are 8 `primitive type`s: byte, short, int, long, float, double, boolean, char. Others are thought of as a `reference type`.
+* When declaring a variable of any reference type, Java allocates a box of 64 bits **refering to the address**, no matter what type of object.
+* Reference Types obey GRoE as well.
+
+#### 2.1.3 Parameter Passing
+* Passing Parameters obeys the rule of **copying the bits**, also called "pass by value".
+* In Java, one **always** passes by value.  
+
+For example, the call to `doStuff` would not change `x` but `walrus` here.  
+```java
+public class PassByValueFigure {
+    public static void main(String[] args) {
+           Walrus walrus = new Walrus(3500, 10.5);
+           int x = 9;
+
+           doStuff(walrus, x);
+           System.out.println(walrus);
+           System.out.println(x);
+    }
+
+    public static void doStuff(Walrus W, int x) {
+           W.weight = W.weight - 100;
+           x = x - 5;
+    }
+}
+```
+
+#### 2.1.4 Instantiation of Arrays  
+Instantiating an array is very similar to instantiating an object.   
+For example, 
+```java
+int[] x;        // x can only hold the address of an int array. 
+x = new int[]{0, 1, 2 ,95, 4}
+                /* The new keyword creates 5 boxes of 32 bits each and   
+                   returns the address of the overall object for assignment to x. */
+```
+
+####  2.1.5 IntList   
+Here is the implementation of the "Linked List":  
+```java
+public class IntList{
+    public int first;
+    public IntList rest;
+
+    public IntList(int f, IntList r){
+        first = f;
+        rest = r;
+    }
+
+
+    /** Return the size of the list using recursion. */
+    public int size(){
+        if (rest == null){
+            return 1;
+        }
+        return 1 + this.rest.size();
+    }
+    
+    /** Return the size using no recursion. */
+    public int iterativeSize(){
+        IntLIst p = this;
+        int totalSize = 0;
+        while (p != null){
+            totalSize += 1; 
+            p = p.rest;
+        }
+        return totalSize;
+    }
+
+
+    /** Return the ith item of the IntList. */
+    public int get(int i){
+        if (i == 0){
+            return first;
+        return rest.get(i - 1);
+        }
+    }
+    public static void main(String[] args){
+        IntList L = new IntList(15, null);
+        L = new IntList(10, L);
+        L = new IntList(5,L);
+
+        System.out.println(L.size());
+        System.out.println(L.interactiveSize());
+    }
+}
+```
+
+Remark:  
+* Syntax like `if (this == null){return 0};` won't always work, as there would be a `NullPointer` error if object L is null.   
+* It is adviced to use `p` as a reminder of the variable holding a pointer. `this` cannot be reassigned in Java.     
+* The method above takes linear time with respect to list size.  
+
+
+### 2.2 SLList 
+Here is the implementation:   
+```java
+public class SLList{
+    private static class IntNode{
+      public int item;
+      public IntNode next;
+
+      public IntNode(int i, IntNode n){
+          item = i;
+          next = n;
+      }
+    }
+
+    private IntNode first;
+    private int size;
+}
+
+    /** Create an empty list */
+    public SLList{
+        first = null;
+        size = 0;
+    }
+
+    public SLList(int x){
+        first = new IntNode(x, null) 
+    }
+
+    public int item;
+    public IntNode next;
+
+    public IntNode(int i, IntNode n){
+        item = i;
+        next = n;
+    }
+
+    /** Add x to the front of the list. */
+    public void addFirst(int x){
+        size = size + 1
+        first = new IntNode(x,first)
+    }
+
+    /** return the first item of the list. */
+    public int getFirst(){
+        return first.item()
+    }
+
+    /** Add an item to the end of the list. */
+    public void addLast(int x){
+        size = size + 1;
+
+        if (first == null){
+            first = new IntNode(x,null);
+            return ;
+        }
+        IntNode p = first;
+        while (p.next != null){
+            p = p.next
+        }
+        p.next = new IntNode(x, null);
+    }
+
+    /** Return the size of the list starting at IntNode P */
+    private static int size(IntNode p){
+        if (p.next == null){
+            return 1;
+        }
+        return 1+ size(p.next);
+    }
+    public int size{
+        return size(first)
+    } 
+
+ 
+public static void main(String[] args){
+    /* Create a list of one integer 5 */
+    SLList L2 = new SLList();
+    L.addFirst(10);
+    L.addLast(5);
+    System.out.println(L.size())
+}
+
+```
+ 
+Remark:  
+
+**Rebranding:**
+* The `SLList` hides the detail of the `null` link from the user, compares to ` IntList L1 = new IntList(5, null)`.
+* While the **Naked recursion** allows the `IntList` user to potentionally have variables pointing to the middle of the structure,
+`SLList` class acts as a middle man hiding user from the raw data structure.
+
+**Private and Public:**
+* `private` keyword is applied to prevent codes from other classes from using members or constructor of a class.  
+* **Restricting access** is to hide implementation details from users of the class, both easier to understand and safer for later change.  
+* Nested classes are useful when one class is subordinate to another class.  
+
+**Nested Class:**
+* `IntNode` class never uses any instance members of the outer class, hence keyword `static` could be applied.  
+
+**Methods:**  
+* Two methods with the same name but different signatures are overloaded and allowed in Java

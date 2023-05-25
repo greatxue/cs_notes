@@ -7,4 +7,4 @@ ref: ucb_CS61A
 - - -
 
 ## Essentials:  
-## 1. Building Abstractions with Functions
+### 1. Functions  

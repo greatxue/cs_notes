@@ -50,7 +50,7 @@ Example: (basic `<head>` section)
 ## 2. Advanced utilities
 
 ## 3. Reference  
-1. [**HTML.COM** Learn HTML](https://html.com/#tutorial)
+1. [**HTML.COM:** Learn HTML](https://html.com/#tutorial)
 
 
 

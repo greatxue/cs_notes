@@ -458,14 +458,14 @@ Here are key commads introduced above:
 
 ## <span id='4'>4. vim</span> 
 
-### 4.1 Quick start
+### 4.1 Introduction  
 **vim** could be accessed by entering &ensp;`vim *file*`&ensp; in the terminal. It could be divided into three modes, which are:
 * Command mode
 * Insert mode
 * Last line mode
 
 
-#### 4.1.1  **Command mode**
+#### 4.2 Command mode
 vim is at command mode when the user starts vi/vim.  
 In this state, keystrokes are recognized by Vim as commands:
 * `i` -> Switch to insert mode to input characters.
@@ -473,7 +473,7 @@ In this state, keystrokes are recognized by Vim as commands:
 * `:` -> Switch to last line mode to enter a command on the last line.
 
 
-#### 4.1.2 **Insert mode**
+#### 4.3 Insert mode
 Pressing "i" in command mode enters insert mode. In insert mode, you can use the following keys:
 * **(Shift) Character keys** -> input characters
 * **ENTER** -> start a new line
@@ -483,14 +483,25 @@ Pressing "i" in command mode enters insert mode. In insert mode, you can use the
 e cursor changes to a vertical line/underscore
 * **ESC** -> exit insert mode and switch to command mode
 
+More commands:  
 
-#### 4.1.3 **Last line mode**
+* `i` -> insert before the cursor
+* `I` -> insert at the start of the line
+* `a` -> insert after thr cursor
+* `A` -> insert at the end of the line
+* `o` -> insert at the start of next line
+* `O` -> insert at the start of last line
+* `s` -> delete and insert at the position of cursor
+* `S` -> delete the line and insert at the start
+* `cw` -> delete all from cursor to word-end, and insert
+
+#### 4.4 Last line mode  
 Pressing ":" (colon) in command mode enters last line mode. 
 * `:q` -> Quit the program
 * `:w` -> Save the file
 
+More commands:   
 
-### 4.2 More commands
 * **Multiple-file arrangement**
 
   ```shell
@@ -513,24 +524,22 @@ Pressing ":" (colon) in command mode enters last line mode.
 
   `cmd` + `w` + **`H`** / **`L`** /  **`K`** / **`J`** -> move split to left / right / up / down 
 
-  `cmd` + `w` + **`c `** /  **`q `** -> quit vim
+  `cmd` + `w` + **`c`** /  **`q`** -> quit vim
 
 * **Quit & save commands**
 
   ```shell
-  :w   # save, not quit
-  :w!   # force save, not quit
-  :w *file*   # save change to file
-  :q!   # quit, not save
-  :qa!  # quit all, not save
-  :wq  # quit & save
-  :x   #quit & save
-  :e *file*   # open another file
-  :e!   # abandon change
-  :saveas *file*   # save as
-  
-  
-  
+  :w                # save, not quit
+  :w!               # force save, not quit
+  :w *file*         # save change to file
+  :q!               # quit, not save
+  :qa!              # quit all, not save
+  :wq               # quit & save
+  :x                # quit & save
+  :e *file*         # open another file
+  :e!               # abandon change
+  :saveas *file*    # save as
+  :bn  :bp          # switch between files
   ```
 * 
   
@@ -864,12 +873,12 @@ all odd numbers are prime
 
 #### 5.3.4 More details
 **Packages**  
-* beamer: for presentations  
-* todonotes: comments and to-do management  
-* tikz: make amazing graphics  
-* pgfplots: create graphs in LaTeX
-* listings: source code printer for LaTeX
-* spreadtab: create spreadsheets in LaTeX   
+* `beamer`: for presentations  
+* `todonotes`: comments and to-do management  
+* `tikz`: make amazing graphics  
+* `pgfplots`: create graphs in LaTeX
+* `listings`: source code printer for LaTeX
+* `spreadtab`: create spreadsheets in LaTeX   
 ...
 
 **Application**  
@@ -881,4 +890,4 @@ all odd numbers are prime
 2. [**Overleaf:** Intro to LaTeX 2](https://www.overleaf.com/latex/learnfree-online-introduction-to-latex-part-2)  
 3. [**Overleaf:** Intro to LaTeX 3](https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-3)  
 4. [**Overleaf:** Examples](https://www.overleaf.com/latex/examples)  
-5. [**texamples**](http://texample.net)
+5. [**TEXample.net**](http://texample.net)
