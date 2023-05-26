@@ -440,23 +440,26 @@ public class SLList{
       public IntNode next;
 
       public IntNode(int i, IntNode n){
-          item = i;
-          next = n;
+        item = i;
+        next = n;
       }
     }
 
-    private IntNode first;
+/* The 1st item, if exists, is at sentinel.next */
+    private IntNode sentinel;
     private int size;
 }
 
     /** Create an empty list */
     public SLList{
-        first = null;
+        sentinel = new IntNode(??, null);
         size = 0;
     }
 
     public SLList(int x){
-        first = new IntNode(x, null) 
+        sentinel = new IntNode(??, null);
+        sentinel.next = new IntNode(x, null)；
+        size = 1;  
     }
 
     public int item;
@@ -469,24 +472,20 @@ public class SLList{
 
     /** Add x to the front of the list. */
     public void addFirst(int x){
-        size = size + 1
-        first = new IntNode(x,first)
+        size += 1
+        sentinel.next = new IntNode(x, sentinel.next);
     }
 
     /** return the first item of the list. */
     public int getFirst(){
-        return first.item()
+        return sentinel.next.item();
     }
 
     /** Add an item to the end of the list. */
     public void addLast(int x){
-        size = size + 1;
+        size += 1;
 
-        if (first == null){
-            first = new IntNode(x,null);
-            return ;
-        }
-        IntNode p = first;
+        IntNode p = sentinel;
         while (p.next != null){
             p = p.next
         }
@@ -498,7 +497,7 @@ public class SLList{
         if (p.next == null){
             return 1;
         }
-        return 1+ size(p.next);
+        return 1 + size(p.next);
     }
     public int size{
         return size(first)
@@ -531,4 +530,104 @@ Remark:
 * `IntNode` class never uses any instance members of the outer class, hence keyword `static` could be applied.  
 
 **Methods:**  
-* Two methods with the same name but different signatures are overloaded and allowed in Java
+* Two methods with the same name but different signatures are overloaded and allowed in Java.         
+
+**Caching:**
+* The practice of saving important data to speed up retrieval is known as **caching**.         
+
+**Sentinel Nodes:**
+* Based on the structure containing `first`, one solution to fix `addLast` bug for the empty list is like:  
+  ```java
+  if (first == null){
+    first = new IntNode(x, null);
+    return ;
+  }
+* However, to keep complexity under control wherever possible, a `sentinel node` could be created to unify all cases. That's why the data structure is improved.  
+
+**Invariants:**  
+* An invariant is a fact about a data structure that is guaranteed to be true.  
+
+
+### 2.3 DLList 
+Here is the implementation:   
+```java
+public class SLList{
+    private static class IntNode{
+      public int item;
+      public IntNode next;
+
+      public IntNode(int i, IntNode n){
+        item = i;
+        next = n;
+      }
+    }
+
+/* The 1st item, if exists, is at sentinel.next */
+    private IntNode sentinel;
+    private IntNode last;  
+    private int size;
+}
+
+    /** Create an empty list */
+    public SLList{
+        sentinel = new IntNode(??, null);
+        size = 0;
+    }
+
+    public SLList(int x){
+        sentinel = new IntNode(??, null);
+        sentinel.next = new IntNode(x, null)；
+        size = 1;  
+    }
+
+    public int item;
+    public IntNode next;
+
+    public IntNode(int i, IntNode n){
+        item = i;
+        next = n;
+    }
+
+    /** Add x to the front of the list. */
+    public void addFirst(int x){
+        size += 1
+        sentinel.next = new IntNode(x, sentinel.next);
+    }
+
+    /** return the first item of the list. */
+    public int getFirst(){
+        return sentinel.next.item();
+    }
+
+    /** Add an item to the end of the list. */
+    public void addLast(int x){
+        size += 1;
+
+        IntNode p = sentinel;
+        while (p.next != null){
+            p = p.next
+        }
+        p.next = new IntNode(x, null);
+    }
+
+    /** Return the size of the list starting at IntNode P */
+    private static int size(IntNode p){
+        if (p.next == null){
+            return 1;
+        }
+        return 1 + size(p.next);
+    }
+    public int size{
+        return size(first)
+    } 
+
+ 
+public static void main(String[] args){
+    /* Create a list of one integer 5 */
+    SLList L2 = new SLList();
+    L.addFirst(10);
+    L.addLast(5);
+    System.out.println(L.size())
+}
+
+```
