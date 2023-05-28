@@ -448,7 +448,7 @@ public class SLList{
 /* The 1st item, if exists, is at sentinel.next */
     private IntNode sentinel;
     private int size;
-}
+
 
     /** Create an empty list */
     public SLList{
@@ -501,7 +501,8 @@ public class SLList{
     }
     public int size{
         return size(first)
-    } 
+    }
+} 
 
  
 public static void main(String[] args){
