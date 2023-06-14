@@ -1,4 +1,5 @@
 package Lists;
+
 public class CirList {
     private static class IntNode {
         public int item;

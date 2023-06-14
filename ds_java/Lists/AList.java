@@ -1,15 +1,15 @@
 package Lists;
 /* AList Invariants:
-   + The position of next item to-be-inserted is `size`.
-   + `size` is always the number of items in the AList.
-   + The last item in the list is always in position `size - 1`.
+   1. The position of next item to-be-inserted is 'size'.
+   2. 'size' is always the number of items in the AList.
+   3. The last item in the list is always in position 'size - 1'.
  */
 
 public class AList<Item> {
     private Item[] items;
     private int size;
 
-    /** Create an empty list. */
+    /** Creates an empty list. */
     public AList() {
         items = (Item[]) new Object[100];
         size = 0;
@@ -68,5 +68,29 @@ public class AList<Item> {
         items[size - 1] = null;
         size -= 1;
         return x;
+    }
+    public static void main(String[] args) {
+        AList<Integer> myList = new AList<>();
+
+        // Add to the end of the list.
+        myList.addLast(5);
+        myList.addLast(10);
+        myList.addLast(15);
+
+        // Get the size of the list.
+        int size = myList.size();
+        System.out.println("The size of list: " + size);
+
+        // Get the item of the list.
+        int item = myList.get(1);
+        System.out.println("The item [1]: " + item);
+
+        // Delete end of the list.
+        int removedItem = myList.removeLast();
+        System.out.println("The item deleted: " + removedItem);
+
+        // Get the last item of the list.
+        int lastItem = myList.getLast();
+        System.out.println("The last item: " + lastItem);
     }
 }

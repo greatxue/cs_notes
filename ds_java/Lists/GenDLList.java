@@ -1,4 +1,5 @@
 package Lists;
+
 public class GenDLList<LochNess> {
     private class PubNode {
         public LochNess item;

@@ -1,15 +1,17 @@
 # Data Structure with Java
 - - -
-author: Kevin Shuey  
-title: Notes for Data Structure with Java  
-date: 2023-05-05  
-ref: ucb_CS61B
+author: Josh Hug
+editor: Kevin Shuey    
+title: Notes for Data Structure with Java   
+date: 2023-05-05   
+ref: ucb_CS61B  
 - - -
 
 **Coverage:**  
 
 [1. Intruduction to Java](#1)  
-[2. Lists](#2)   
+[2. Lists](#2)     
+[3. Testing](#3)    
 
 
 ## 1. <span id='1'>Intruduction to Java</span>
@@ -375,6 +377,51 @@ x = new int[]{0, 1, 2 ,95, 4}
 ####  2.1.5 IntList   
 Here is the implementation of the "Linked List":  
 ```java
+public class IntList {
+    public int first;
+    public IntList rest;
+
+    public IntList(int f, IntList r) {
+        first = f;
+        rest = r;
+    }
+
+    /** Return the size of the list using recursion. */
+    public int size() {
+        if (rest == null) {
+            return 1;
+        }
+        return 1 + this.rest.size();
+    }
+
+    /** Return the size using no recursion. */
+    public int iterativeSize() {
+        IntList p = this;
+        int totalSize = 0;
+        while (p != null) {
+            totalSize += 1;
+            p = p.rest;
+        }
+        return totalSize;
+    }
+
+    /** Return the ith item of the IntList. */
+    public int get(int i) {
+        if (i == 0) {
+            return first;
+        }
+        return rest.get(i - 1);
+    }
+
+    public static void main(String[] args) {
+        IntList L = new IntList(15, null);
+        L = new IntList(10, L);
+        L = new IntList(5, L);
+
+        System.out.println(L.size());
+        System.out.println(L.iterativeSize());
+    }
+}
 
 ```
 
@@ -691,7 +738,7 @@ Some rules working with generic lists:
 * In the `.java` file implementing a data structure, specify your generic type name only once at the very top of the file after the class name.
 * In other `.java` files using data structure, specify the specific desired type during declaration, and use the empty diamond operator during instantiation.
 * Though redundant, the one below is also perfectly valid:  
-  ```DLList<Integer> d1 = new DLList<Integer>(5);```
+  `DLList<Integer> d1 = new DLList<Integer>(5);`
 
 ### 2.4 Arrays
 
@@ -909,3 +956,35 @@ Item[] items = (Item []) new Object[8];
 ```
 
 The other change is that any "delete" items should be nulled out.
+
+
+## 3. <span id='3'>Utilities</span>
+
+### 3.1 Testing
+Programmers knows theire codes work based on tests they write.
+* Unit Test: A softwre method by which individual units of source code are tested to determine whether they are fit for use.  
+  For example, `JUnit`, `AssertJ`, and `Truth`.
+
+Here is the Testing Demo with `Truth`:
+```java
+package Sort;
+
+import org.junit.jupiter.api.Test;
+import static com.google.common.truth.Truth.assertThat;
+
+public class TestSort {
+    /** Test the sort method of the sort class. */
+    @Test
+    public void testSort() {
+        String[] input = {"rawr", "a", "zaza", "newway"};
+        String[] expected = {"a","newway", "rawr", "zaza"};
+        Sort.sort(input);
+        
+        assertThat(input).isEqualTo(expected);
+    }
+}
+```
+
+### 3.2 
+
+### 3.3 Debugging
