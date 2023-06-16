@@ -12,6 +12,7 @@ ref: ucb_CS61B
 [1. Intruduction to Java](#1)  
 [2. Lists](#2)     
 [3. Testing](#3)    
+[4. Inheritance, Implements](#4) 
 
 
 ## 1. <span id='1'>Intruduction to Java</span>
@@ -985,6 +986,57 @@ public class TestSort {
 }
 ```
 
-### 3.2 
+### 3.2 Coding Philosophy
 
 ### 3.3 Debugging
+
+
+## 4. <span id='4'>Inheritance, Implements</span>
+
+Consider a method:
+```java
+public static String longest(SLList<String> list) {
+    int maxDex = 0;
+    for (int i = 0; i < list.size(); i += 1) {
+        String longestString = list.get(maxDex);
+        String thisString = list.get(i);
+        if (thisString.length() > longestString.length()) {
+            maxDex = i;
+        }
+    }
+    return list.get(maxDex);
+}
+```
+
+Actually, implemented by `ALList` is also OK, i.e. changing the parametre to ` AList<String> list`.  
+If there are these two methods in the same class, it is actually allowed, which is called *overloading* in Java.  
+However, overloading has several downsides:  
+* Super repetitive and ugly.  
+* More codes to maintain, especially for possible partial correction when debugging.  
+* Inconvenient for more list types.  
+
+**Hypernyms, Hyponyms, and Interface Inheritance**
+
+Similar to what it is like in language, formalize this relationship in Java:     
+If a SLList is a hyponym of List61B, then the SLList class is a **subclass** of the List61B class and the List61B class is a **superclass** of the SLList class.   
+
+Here is the List61B interface and establish the relationship hierarchy.
+
+**Step 1: Create a hypernym**
+```java
+public interface List61B<Item> {
+    public void addFirst(Item x);
+    public void add Last(Item y);
+    public Item getFirst();
+    public Item getLast();
+    public Item removeLast();
+    public Item get(int i);
+    public void insert(Item x, int position);
+    public int size();
+}
+```
+
+**Step 2: specify hyponyms of the class**
+
+Add to `public class AList<Item> {}` as
+`public class AList<Item> implements List61B<Item>{}`.
