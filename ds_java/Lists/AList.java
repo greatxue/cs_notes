@@ -24,10 +24,11 @@ public class AList<Item> {
 
     /** Adjust the size of the list. */
     private void resize(int capacity) {
-        int[] a = new int[capacity];
+        Item[] a = (Item[]) new Object[capacity];
         System.arraycopy(items, 0, a, 0, size);
-
+        items = a;
     }
+
 
     /** Insert an item at the end of thelist, even if out-of-range. */
     public void insertBack(Item x) {

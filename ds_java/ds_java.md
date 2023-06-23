@@ -1040,3 +1040,44 @@ public interface List61B<Item> {
 
 Add to `public class AList<Item> {}` as
 `public class AList<Item> implements List61B<Item>{}`.
+
+
+**Overriding**
+If a subclass has a  method with the same signature as in the superclass, then the subclass **overrides** the method.
+* `Animal`'s subclass `Pig` overrides the `makeNoise()` method.
+  ```java 
+  public interface Animal {
+    public void makeNoise();
+  }
+
+  public class Pig implements Animal {
+    public voide makeNoide() {
+        System.out.print("oink");
+    }
+  }
+  ```
+
+* `makeNoise` is **overloaded**, with the same name but different signatures.
+  ```java
+  public class Dog implements Animal {
+    public void makeNoise(Dog x) {}
+  }
+  ```
+   
+For CS61B, mark every method with the `@Override` annotation in case the code won't compile unless it is actually an overriding method.    
+Reason:
+* Protect against typos, which would raise error.  
+* Remind that the method definition came from higher heritance. 
+
+**Interface Inheritance**
+
+With the usage of keyword `implements`,    
+* All sub-classes are said to inherit the interface from the super-class.     
+* Interface consists of all the method signatures.   
+
+With the philosophy of GRoE, `AList` is able to fit into a `List61B` box well since `AList` share an "is-a" relationship with `List61B`.
+
+**Implementation Inheritance**
+
+Compared to interface interitance where subclass inherits signatures but NOT implementation, use `default` keyworf to specify a method that subclasses shoulf inherit from an interface, which is called **implementation inheritance**, inheriting signatures AND implementation.
+
