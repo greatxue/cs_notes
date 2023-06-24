@@ -67,6 +67,22 @@ date: 2023-05-08
   mv -i         # move with asking
   mv -f         # move with asking
   mv -u         # move if new/null
+  ```
 
-* `cp` 
+* `cp` -- copy a file
+  ```shell
+  cp *para* *source-file*
+  cp -H         # copy files for symlinks in commands and themselves in process
+  cp -l         # build hard link instead of copying files
+  cp -L         # copy files targeted ny links
+  cp -p         # copy with all attributes
+  cp -r -R      # copy (sub-)directories recursively
+  cp -s         # build symlink instead of copying files
+  ```
+* `rm` -- remove files
+  ```shell
+  rm *par* *file/dir*
+  rm -i         # always prompt when deleting
+  rm -r         # remove entire directories with subs
+  ```
 

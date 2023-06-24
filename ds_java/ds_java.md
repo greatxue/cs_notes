@@ -253,11 +253,11 @@ Java allows two types of methods:
       }
       return d2;
    }
-
+  
   Dog d = new Dog(15);
   Dog d2 = new Dog(100);
   d.maxDog(d2);
-  ```   
+  ```
 
 **Static Variables**  
 It is occasionally useful for classes to have static variables.   
@@ -332,6 +332,7 @@ System.out.println("y is: " + y);   // 5
 * All information in the computer is stored in **memory** as a sequence of binary digits.
 * When declaring a variable of a certain type, it sets aside enough bits for the variable, and creates an internal table mapping each variable name to a location.
   
+
 **The Golden Rule of Equals (GRoE)**
 * When writing `y = x`, Java interpreter is told to copy the bits from x into y. 
 * This simple idea of copying the bits is true for ANY assignment using `=` in Java.   
@@ -497,7 +498,7 @@ public class SLList {
     }
 }
 ```
- 
+
 Remark:  
 
 **Rebranding:**
@@ -690,9 +691,9 @@ Remark:
         last = last.next;
         size += 1;
     }
-    ```
-**Back Pointers**
-Back pointers allow a list to support adding, getting, and removing the front and back of a list in constant time, with `prev` and `next`.
+  ```
+  **Back Pointers**
+  Back pointers allow a list to support adding, getting, and removing the front and back of a list in constant time, with `prev` and `next`.
 
 **Sentinel Upgrade**
 There is a subtle issue  where the last pointer sometimes points at the sentinel node, and sometimes at a real node:
@@ -821,7 +822,7 @@ int[][] pascalAgain = new int[][]{{1}, {1, 1},
 The key differences between memory boxes in arrays and classes:
 * Array boxes are numbered and accessed using `[]` notation, and class boxes are named and accessed using dot notation.  
 * Array boxes must all be the same type. Class boxes can be different types. 
- 
+
 One particularly impact is that `[]` notation allows specifying index at runtime.   
 For example, consider the code below:
 ```java
@@ -846,7 +847,7 @@ Compared to arrays in other languages, Java arrays:
 * Cannot be shrunk or expanded (such as in `Ruby`).
 * Do not have member methods (such as in `Javascript`).
 * Must contain values only of the same type (unlike `Python`).
- 
+
 
 #### 2.4.2 AList
 Here is the implementation:
@@ -1049,7 +1050,7 @@ If a subclass has a  method with the same signature as in the superclass, then t
   public interface Animal {
     public void makeNoise();
   }
-
+  
   public class Pig implements Animal {
     public voide makeNoide() {
         System.out.print("oink");
@@ -1063,7 +1064,8 @@ If a subclass has a  method with the same signature as in the superclass, then t
     public void makeNoise(Dog x) {}
   }
   ```
-   
+  
+
 For CS61B, mark every method with the `@Override` annotation in case the code won't compile unless it is actually an overriding method.    
 Reason:
 * Protect against typos, which would raise error.  
