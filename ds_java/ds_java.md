@@ -12,7 +12,7 @@ ref: ucb_CS61B
 [1. Intruduction to Java](#1)  
 [2. Lists](#2)     
 [3. Testing](#3)    
-[4. Inheritance, Implements](#4) 
+[4. Java Characteristics](#4)  
 
 
 ## 1. <span id='1'>Intruduction to Java</span>
@@ -991,8 +991,9 @@ public class TestSort {
 
 ### 3.3 Debugging
 
+## 4. <span id='4'>Java Characteristics</span>
 
-## 4. <span id='4'>Inheritance, Implements</span>
+### 4.1 Inheritance, Implements
 
 Consider a method:
 ```java
@@ -1083,3 +1084,256 @@ With the philosophy of GRoE, `AList` is able to fit into a `List61B` box well si
 
 Compared to interface interitance where subclass inherits signatures but NOT implementation, use `default` keyworf to specify a method that subclasses shoulf inherit from an interface, which is called **implementation inheritance**, inheriting signatures AND implementation.
 
+In the `interface`, add a new function as follows, then everything implementing the class can use the method:
+
+```java
+default public void print() {
+    for (int i = 0; i < size(); i += 1) {
+        System.out.print(get(i) + " ");
+    }
+    System.out.println();
+}
+```
+
+For an `SLList`, it is inefficient. The method could also be override like:
+
+```java
+@Override
+public void print() {
+    for (Node p = sentinel.next; p != null; p = p.next) {
+        System.out.print(p.item + " ");
+    }
+}
+```
+
+Java is able to call the appropriate `print`  due to something called **dynamic method selection**.
+
++ Dynamic method selection only happens for **overridden** methods.
+
+  That is, when instance method of subtype overrides some method in supertype, regarding **a subclass inheritant from a super one**.
+
++ Dynamic method selection does not happen for **overloaded** methods.
+
+  That is, when **the same** class has two methods, one for supertype and the other is for subtype.
+
+  ```java
+  public static void peek(List61B<String> list) {
+      System.out.println(list.getLast());
+  }
+  public static void peek(SLList<String> list) {
+      System.out.println(list.getFirst());
+  }
+  ```
+
+**Interface vs Implementation Inheritance**
+
+The first one allows to generalize code in a powerful and simple way, while the latter allows code-reuse, where subclasses can rely on superclasses or interfaces.  
+
+However, both of them guaratee a **"is - a"** relationship instead of **"has - a"**.
+
+### 4.2 Extends, Encapsulation, Casting
+
+**Extends**
+
+When a class is a hyponym of another class, use `extends`.
+
+Because of `extends`, the subclass `VengefulSLList` inherits nearly all members of superclass `SLList`:
+
+- All instance and static variables.
+- All methods.
+- All nested classes.
+- However, constructors are **not** inherited!
+
+To discuss the constructor behaviour in detail, one should be aware that all constructors must start with a call to one of the super class’s constructors. If not, Java will automatically do it.
+
+For example,
+
+```java
+public VengefulSLList() {
+   deletedItems = new SLList<Item>();
+}
+
+// equivalent to
+public VengefulSLList() {
+   super();
+   deletedItems = new SLList<Item>();
+}
+
+// NOT equivalent to
+
+public VengefulSLList() {
+   super(x);
+   deletedItems = new SLList<Item>();
+}
+```
+
+By the way, extends should only be used for **"is - a"** as well, and all types in Java is a descendant of the `Object` class.
+
+**Encapsulation**
+
+* **Module**  is a set of methods that work together as a whole to perform some task or set of related tasks. 
+
+* A module is said to be **encapsulated** if its implementation is completely hidden, and it can be accessed only through a documented interface.
+
+**Casting**
+
+Java has a special syntax for specifying the compile-time type of any expression.
+
+- Put desired type in parenthesis before the expression.
+- Tells compiler to pretend it sees a particular type.
+
+```java
+Object obj = "Hello, world!";
+String str = (String) obj;
+
+System.out.println(str);
+```
+
+### 4.3 Higher Order Functions
+
+Compare these two approaches with Python,
+
+* **Explicit HoF** Approach:
+
+  ```java
+  def print_larger(x, y, compare, stringify):
+      if compare(x, y):
+          return stringify(x)
+      return stringify(y)
+  ```
+
+  Using the explicit higher order function approach, there is **a common way** to print out the larger of two objects.
+
+* **Subtype Polymorphism** Approach:
+
+  ```java
+  def print_larger(x, y):
+      if x.largerThan(y):
+          return x.str()
+      return y.str()
+  ```
+
+In contrast, in the subtype polymorphism approach, the **object** itself makes the choices. 
+
+As to Higher Order Function, it is a function that treats another function as data.
+
+* In Python, it performs like
+
+  ```python
+  # Part I:
+  def tenX(x):
+     return 10*x
+  # Part II: 
+  def do_twice(f, x):
+     return f(f(x))
+   
+  print(do_twice(tenX, 2))
+  ```
+
+* In Java 7 (which is old school), variables cannot contain pointers to functions.
+
+  * To mimic **Part I**, use an `interface` instead:
+
+    ```java
+    public interface IntUnaryFunction {
+    	int apply(int x);
+    }
+    
+    public class TenX implements IntUnaryFunction {
+    	public int apply(int x) {
+       		return 10 * x;
+    	}
+    }
+    ```
+
+  * To finish, code as follows:  
+
+    ```java
+    public class HoFDemo {
+    	public static int do_twice(IntUnaryFunction f, int x) {
+       		return f.apply(f.apply(x));
+    	}
+    	
+    	public static void main(String[] args) {
+       		System.out.println(do_twice(new TenX(), 2));
+    	}
+    }
+    ```
+
+### 4.4 Comparables, Comparators
+
+  Focus on one line of code which will raise error:
+
+```java
+if (items[i] > items[maxDex]) {}
+```
+
+This line is based on the confusing assumption that `>` operator works for all arbitrary `Objects` types, which is not the case.
+
+Here are possible solutions:
+
+* Define the `maxDog` function of the `Dog` class specifically:
+
+  ```java
+  public static Dog maxDog(Dog[] dogs) {
+      if (dogs == null || dogs.length == 0) {
+          return null;
+      }
+      Dog maxDog = dogs[0];
+      for (Dog d : dogs) {
+          if (d.size > maxDog.size) {
+              maxDog = d;
+          }
+      }
+      return maxDog;
+  }
+  ```
+
+  It works, but a `maxCat` function is needed for the `Cat` class, a `maxWhale` is needed for the `Whale` class, etc.
+
+* Java has a built-in interface called `Comparable`:
+
+  ```java
+  import java.util.Comparable;
+  
+  // which is actually
+  public interface Comparable<T> {
+    public int compareTo(T obj);
+  }
+  ```
+
+  It behaves in the principle of
+
+  * Return -1 if `this` < `o`,
+  * Return 0 if `this` equals `o`,
+  * Return 1 if `this` > `o`.
+
+  In this way, rewrite the `Dog` class like:
+
+  ```java
+  public class Dog implements Comparable<Dog> {
+      ...
+      public int compareTo(Dog uddaDog) {
+          return this.size - uddaDog.size;
+      }
+  }
+  ```
+
+  
+
+* Java also has a built-in interface called `Comparator`:
+
+  ```java
+  import java.util.Comparator;
+  
+  // which is actually
+  public interface Comparator<T> {
+      int compare(T o1, T o2);
+  }
+  ```
+
+  It behaves in the principle of
+
+  * Return negative number if `o1` < `o2`,
+  * Return 0 if `o1` equals `o2`,
+  * Return positive number if `o1` > `o2`.

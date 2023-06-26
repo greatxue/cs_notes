@@ -362,7 +362,6 @@ The DataFrame class has an indexing operator `[]` with diverse functions:
       display(g.head())
   ```
   
-
 + Here is a real application:
 
   ```python
@@ -411,7 +410,7 @@ df[(df["Party"] == "Democratic") | (df["Party"] == "Republican")]
 df[df["Party"].isin(["Republican", "Democratic"])]
 ```
 
-
+## 3. <span id='3'>Data Cleaning</span>
 
 
 
