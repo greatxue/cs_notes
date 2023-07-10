@@ -1,6 +1,8 @@
 package src;
 
-public class DLListDS implements Lists<Integer>{
+import java.util.List;
+
+public class DLListDS implements ListDS<Integer> {
     private static class IntNode {
         public int item;
         public IntNode prev;
@@ -76,9 +78,10 @@ public class DLListDS implements Lists<Integer>{
         return 0;
     }
 
-
-
-
+    @Override
+    public List<Integer> toList() {
+        return null;
+    }
 
 
 }

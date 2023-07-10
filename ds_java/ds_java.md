@@ -2,9 +2,10 @@
 - - -
 author: Josh Hug
 editor: Kevin Shuey    
-title: Notes for Data Structure with Java   
+title: Data Structure with Java   
 date: 2023-05-05   
 ref: ucb_CS61B  
+
 - - -
 
 **Coverage:**  
@@ -13,6 +14,8 @@ ref: ucb_CS61B
 [2. Lists](#2)     
 [3. Testing](#3)    
 [4. Java Characteristics](#4)  
+[5. Asymptotics Analysis](#5)   
+[6. Disjoints Sets](#6)   
 
 
 ## 1. <span id='1'>Intruduction to Java</span>
@@ -1319,8 +1322,6 @@ Here are possible solutions:
   }
   ```
 
-  
-
 * Java also has a built-in interface called `Comparator`:
 
   ```java
@@ -1337,3 +1338,136 @@ Here are possible solutions:
   * Return negative number if `o1` < `o2`,
   * Return 0 if `o1` equals `o2`,
   * Return positive number if `o1` > `o2`.
+
+
+
+## 5. <span id='5'>Asymptotics Analysis</span>
+
+### 5.1 Introduction
+
+The process of efficient programming could be considered in two perspectives:
+* Programming Cost (time, readability, maintainance)
+* Execution Cost (**Time/Space** Complexity)
+
+Take the example below as an example, which is to determine if there is a duplicate element in a **sorted** array.
+
+```java
+List<Integer> example = [-3, -1, 2, 4, 4, 8, 10, 12];
+```
+
+There is a significant difference between a **naive** and **better** algorithm.
+
+* Assume the naive one to compare each pair of the elements, like
+
+  ```java
+  // Naive algorithm: compare everything
+  public static boolean dup1(int[] A) {  
+    for (int i = 0; i < A.length; i += 1) {
+      for (int j = i + 1; j < A.length; j += 1) {
+        if (A[i] == A[j]) {
+           return true;
+        }
+      }
+    }
+    return false;
+  }
+  ```
+
+* Assume the better one to compare each element with just the element next to it, like
+
+  ```java
+  // Better algorithm: compare only neighbors
+  public static boolean dup2(int[] A) {
+    for (int i = 0; i < A.length - 1; i += 1) {
+      if (A[i] == A[i + 1]) { 
+        return true; 
+      }
+    }
+    return false;
+  }
+  ```
+
+### 5.2 Notation
+
+Rather than physically timing the amount of time it takes for the algorithm to run, one can instead count the total number of operations given that the **input size** is `N`, probably diveded by **worst case** and **average case**.
+
+* Big-Theta, which is **the order of growth**.           
+
+  $\Theta(N^3+4N^5) = \Theta(N^5)$
+
+* Big-Oh, which is like **"less than or equal"**.
+
+  $N^3+4N^5\in\mathbf{O}(N^6)$
+
+## 6. Disjoint Sets
+
+### 6.1 Introduction
+
+Two sets are named **disjoint sets** if they have no elements in common. 
+
+A **Disjoint-Sets (or Union-Find)** data structure keeps track of a fixed number of elements partitioned into a number of *disjoint sets*. The data structure has two operations:
+
+* `connect(x, y)`: connect `x` and `y`, also known as `union`.
+
+* `isConnected(x, y)`: returns true if `x` and `y` are connected (i.e. part of the same set).
+
+The big idea for the data structure is to have **the connected elements** in the same **set**.
+
+With the intuition in mind, define how the **interface** should be like (which determines *what* it behaves instead of *how* it is accomplished):
+
+```java
+public interface DisjointSets {
+    /** connects two items P and Q */
+    void connect(int p, int q);
+  
+    /** checks to see if two items are connected */
+    boolean isConnected(int p, int q); 
+}
+```
+
+### 6.2 QuickFind and QuickUnion
+
+The idea of `List<Set<Integer>>` is rejected, as it could be slow based on the implementation of Java `List`. 
+
+* `ListOfSetsDS` is complicated and slow.
+
+* It has to iterate over all sets, resulting in a `LIstOfSetsDS` with linear complexity.
+
+Why not use a list of integers instead of a list of sets' integers? Here is part of the implementation:
+
+```java
+public class QuickFindDS implements DisjointSets {
+
+    private int[] id;
+
+    /* Θ(N) */
+    public QuickFindDS(int N){
+        id = new int[N];
+        for (int i = 0; i < N; i++){
+            id[i] = i;
+        }
+    }
+
+    /* need to iterate through the array => Θ(N) */
+    public void connect(int p, int q){
+        int pid = id[p];
+        int qid = id[q];
+        for (int i = 0; i < id.length; i++){
+            if (id[i] == pid){
+                id[i] = qid;
+            }
+        }
+    }
+
+    /* Θ(1) */
+    public boolean isConnected(int p, int q){
+        return (id[p] == id[q]);
+    }
+}
+```
+
+
+* Represent each variable in the same set with the same `id`, a randomly picked number.
+* `isConnected(x, y)` will be really fast, with constant time complexity.
+
+* However, `connect(x, y)` is still slow.

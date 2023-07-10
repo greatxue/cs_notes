@@ -5,14 +5,17 @@ package src;
    3. The last item in the list is always in position "size - 1".
  */
 
-public class AListDS<Item> implements Lists<Item> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AListDS<Item> implements ListDS<Item> {
     private Item[] items;
     private int size;
     private int rfactor = 2;
 
     /** Creates an empty list. */
     public AListDS() {
-        items = (Item[]) new Object[100];
+        items = (Item[]) new Object[5];
         size = 0;
     }
 
@@ -64,6 +67,17 @@ public class AListDS<Item> implements Lists<Item> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public List<Item> toList() {
+        List<Item> returnList = new ArrayList<>();
+        // traverse through the Deque and add it into returnList
+        for (int i = 0; i < size; i++) {
+            Item tmp = this.get(i);
+            returnList.add(tmp);
+        }
+        return returnList;
     }
 
     /** Adjust the size of the list. */
